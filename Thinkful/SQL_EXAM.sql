@@ -20,7 +20,8 @@ ORDER BY state ASC;
 
 --4. Write a query that alters the previous query so that it returns only the summary statistics for avg_math_4_score by state 
 --with differences in max and min values that are greater than 30.
-SELECT state,
+SELECT state, COUNT(avg_math_4_score) AS total_amount,
+       AVG(avg_math_4_score) AS average_score,
        MAX(avg_math_4_score) AS max_score,
        MIN(avg_math_4_score) AS min_score,
 	   (MAX(avg_math_4_score) - MIN(avg_math_4_score)) AS math_score_diff
@@ -46,7 +47,7 @@ WHERE year = 2000;
 
 --7. Write a query that returns a field called below_average_states_y2000. This field should list all states with an 
 --avg_math_4_score less than the average over all states in the year 2000.
-SELECT avg_math_4_score,
+SELECT state AS state_below_avg, avg_math_4_score,
 	CASE
 		WHEN avg_math_4_score <
 			(SELECT AVG(avg_math_4_score)
@@ -72,7 +73,7 @@ SELECT state,
 		ELSE 'Is_Not_Null'
 	END scores_missing_y2000
 FROM naep
-WHERE year = 2000
+WHERE year = 2000 AND avg_math_4_score IS NULL
 ORDER BY scores_missing_y2000;
 
 --9. Write a query that returns, for the year 2000, the state, avg_math_4_score, and total_expenditure from the naep table, 
